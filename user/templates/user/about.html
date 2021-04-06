@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Mobile Navbar -->
+    <div class="navbar__mobile">
+          <div class="items__mobile">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+              <li><a href="#">CONTACT</a></li>
+            </ul>
+          </div>
+        </div>
+
+<!-- Main Navbar -->
+    <nav>
+      <div class="navbar">
+        <div class="upper-navbar">
+          <div class="logo">
+            <img src="{% static '/images/logo-marti.svg' %}" />
+          </div>
+          <a href="#"
+            ><img src="{% static '/images/facebook.svg' %}" alt="facebook"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
+          /></a>
+          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+
+          <div class="hamburger">
+            <button href="">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </button>
+          </div>
+        </div>
+        <div class="nav-space">
+          <div class="items">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-postpage"></main>
+
+    <footer>
+      <div class="footer">
+        <div class="upper-footer">
+          <div class="icons">
+            <a href="#"
+              ><img src="{% static '/images/facebook-light.svg' %}" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
+            /></a>
+          </div>
+        </div>
+        <div class="lower-footer">
+          <div class="footnotes">
+            <p>@BlockBusterGirl</p>
+
+            <p><a href="#">Contact Me</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static '/js/app.js' %}"></script>
+  </body>
+</html>

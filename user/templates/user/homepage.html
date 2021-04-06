@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="navbar__mobile">
+      <div class="items__mobile">
+        <ul>
+          <li><a href="#">HOME</a></li>
+          <li><a href="#">NEWS</a></li>
+          <li><a href="#">BLOG</a></li>
+          <li><a href="#">ABOUT</a></li>
+          <li><a href="#">CONTACT</a></li>
+        </ul>
+      </div>
+    </div>
+    <nav>
+      <div class="navbar">
+        <div class="upper-navbar">
+          <div class="logo">
+            <img src="{% static '/images/logo-marti.svg' %}" />
+          </div>
+          <a href="#"
+            ><img src="{% static '/images/facebook.svg' %}" alt="facebook"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
+          /></a>
+          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+
+          <div class="hamburger">
+            <button href="">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </button>
+          </div>
+        </div>
+        <div class="nav-space">
+          <div class="items">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-homepage">
+      <section class="hero">
+        <div class="illustration">
+          <!-- <img src="./static/images/background-illustration-03.svg" /> -->
+        </div>
+        <div class="what">
+          <div class="title">
+            <h1>What I write about,</h1>
+          </div>
+          <div class="text">
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Consequatur rerum commodi quisquam nobis laboriosam sit,
+              doloremque voluptatem, necessitatibus non, architecto neque
+              consequuntur ipsam odit et fuga similique quaerat ad repellendus!
+              Blanditiis, veniam perferendis asperiores exercitationem vitae
+              ratione deleniti molestias voluptates, ab eligendi maiores! Alias,
+              iure inventore exercitatio
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="latest-news">
+        <div class="news">
+          <div class="header">
+            <h1>Latest News :</h1>
+            <small><a href="news.html">See All News</a></small>
+          </div>
+          <div class="cards">
+            <div class="single-card">
+              <div class="thumbnail">
+                <div class="cover-title"><h2>NEWS 31 Title</h2></div>
+                <a href="single-news.html"
+                  ><img src="{% static '/images/default.jpg' %}"
+                /></a>
+              </div>
+
+              <div class="news-text">
+                <h2>News 1</h2>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Commodi distinctio veniam aliquam rem dolore reprehenderit
+                  ipsam delectus incidunt nam atque.
+                </small>
+              </div>
+            </div>
+            <div class="single-card">
+              <div class="thumbnail">
+                <div class="cover-title"><h2>NEWS 2 Title</h2></div>
+                <a href="single-news.html"
+                  ><img src="{% static '/images/default.jpg' %}"
+                /></a>
+              </div>
+
+              <div class="news-text">
+                <h2>News 1</h2>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Commodi distinctio veniam aliquam rem dolore reprehenderit
+                  ipsam delectus incidunt nam atque.Lorem ipsum dolor sit amet
+                  consectetur, adipisicing elit. Commodi distinctio veniam
+                  aliquam rem dolore reprehenderit ipsam delectus incidunt nam
+                  atque.Lorem ipsum dolor sit amet consectetur, adipisicing
+                  elit. Commodi distinctio veniam aliquam rem dolore
+                  reprehenderit ipsam delectus incidunt nam atque.
+                </small>
+              </div>
+            </div>
+            <div class="single-card">
+              <div class="thumbnail">
+                <div class="cover-title"><h2>NEWS 3 Title</h2></div>
+                <a href="single-news.html"
+                  ><img src="{% static '/images/default.jpg' %}"
+                /></a>
+              </div>
+
+              <div class="news-text">
+                <h2>News 1</h2>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Commodi distinctio veniam aliquam rem dolore reprehenderit
+                  ipsam delectus incidunt nam atque.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="in-between"></section>
+      <section class="latest-posts">
+        <div class="posts">
+          <div class="post-header">
+            <h1>Latest Posts :</h1>
+            <small><a href="posts.html">See All Posts</a></small>
+          </div>
+          <div class="post-cards">
+            <div class="post-single-card">
+              <div class="thumbnail">
+                <div class="cover-title"><h2>Post 1 Title</h2></div>
+                <a href="single-post.html"
+                  ><img src="{% static '/images/default.jpg' %}"
+                /></a>
+              </div>
+
+              <div class="post-text">
+                <h2>Post 1</h2>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Commodi distinctio veniam aliquam rem dolore reprehenderit
+                  ipsam delectus incidunt nam atque.
+                </small>
+              </div>
+            </div>
+            <div class="post-single-card">
+              <div class="thumbnail">
+                <div class="cover-title"><h2>Post 2 Title</h2></div>
+                <a href="single-post.html"
+                  ><img src="{% static '/images/default.jpg' %}"
+                /></a>
+              </div>
+
+              <div class="post-text">
+                <h2>Post 2</h2>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Commodi distinctio veniam aliquam rem dolore reprehenderit
+                  ipsam delectus incidunt nam atque.
+                </small>
+              </div>
+            </div>
+            <div class="post-single-card">
+              <div class="thumbnail">
+                <div class="cover-title"><h2>Post 3 Title</h2></div>
+                <a href="single-post.html"
+                  ><img src="{% static '/images/default.jpg' %}"
+                /></a>
+              </div>
+
+              <div class="post-text">
+                <h2>Post 3</h2>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Commodi distinctio veniam aliquam rem dolore reprehenderit
+                  ipsam delectus incidunt nam atque.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer">
+        <div class="upper-footer">
+          <div class="icons">
+            <a href="#"
+              ><img src="{% static '/images/facebook-light.svg' %}" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
+            /></a>
+          </div>
+        </div>
+        <div class="lower-footer">
+          <div class="footnotes">
+            <p>@BlockBusterGirl</p>
+
+            <p><a href="#">Contact Me</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static '/js/app.js' %}"></script>
+  </body>
+</html>

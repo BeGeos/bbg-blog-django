@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Post</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Mobile Navbar -->
+    <div class="navbar__mobile">
+          <div class="items__mobile">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+              <li><a href="#">CONTACT</a></li>
+            </ul>
+          </div>
+        </div>
+
+<!-- Main Navbar -->
+    <nav>
+      <div class="navbar">
+        <div class="upper-navbar">
+          <div class="logo">
+            <img src="{% static '/images/logo-marti.svg' %}" />
+          </div>
+          <a href="#"
+            ><img src="{% static '/images/facebook.svg' %}" alt="facebook"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
+          /></a>
+          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+
+          <div class="hamburger">
+            <button href="">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </button>
+          </div>
+        </div>
+        <div class="nav-space">
+          <div class="items">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+                    <li>
+                        <a href="#"
+                          ><img src="{% static 'images/plus-square.svg' %}" height="23px"
+                        /></a>
+                    </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- If messages in request -->
+    <main class="main-postpage">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    <div class="message__text">
+                      <small style="margin-right: auto">{{ message }}</small>
+                      <button onclick="switchOff()">
+                        <img src="{% static '/images/exit.svg' %}" />
+                      </button>
+                    </div>
+                </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Create Post form -->
+        <div class="author">
+        <h2 style="text-align: center">Update Post...</h2>
+        <form method="POST">
+          <label for="title"> Title: </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Enter title here..."
+          />
+          <label for="summary">Summary: </label>
+          <input
+            type="text"
+            id="summary"
+            name="summary"
+            placeholder="Enter summary here..."
+          />
+          <label for="text-news">Post:</label>
+          <textarea
+            id="text-news"
+            name="text-news"
+            cols="8"
+            rows="18"
+          ></textarea>
+          <div class="form__images">
+            <label for="thumbnail">Cover Pic: </label>
+            <input
+              type="file"
+              id="thumbnail"
+              name="thumbnail"
+              style="border: none"
+            />
+            <hr />
+            <input
+              type="file"
+              id="files"
+              name="post-pics"
+              multiple
+              style="border: none"
+            />
+          </div>
+          <div class="form__tags">
+            <label for="tags">Tags: </label>
+            <input
+              type="text"
+              name="tags"
+              placeholder="Enter Tags here e.g.: tag1, tag2, tag3..."
+            />
+          </div>
+
+          <div class="form__button">
+            <a href="">Update</a>
+            <a href="#">Cancel</a>
+          </div>
+        </form>
+      </div>
+
+    </main>
+    <footer>
+      <div class="footer">
+        <div class="upper-footer">
+          <div class="icons">
+            <a href="#"
+              ><img src="{% static '/images/facebook-light.svg' %}" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
+            /></a>
+          </div>
+        </div>
+        <div class="lower-footer">
+          <div class="footnotes">
+            <p>@BlockBusterGirl</p>
+
+            <p><a href="#">Contact Me</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+<script src="{% static '/js/app.js' %}"></script>
+  </body>
+</html>

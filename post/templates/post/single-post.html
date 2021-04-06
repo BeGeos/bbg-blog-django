@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Post</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Mobile Navbar -->
+    <div class="navbar__mobile">
+          <div class="items__mobile">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+              <li><a href="#">CONTACT</a></li>
+            </ul>
+          </div>
+        </div>
+
+<!-- Main Navbar -->
+    <nav>
+      <div class="navbar">
+        <div class="upper-navbar">
+          <div class="logo">
+            <img src="{% static '/images/logo-marti.svg' %}" />
+          </div>
+          <a href="#"
+            ><img src="{% static '/images/facebook.svg' %}" alt="facebook"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
+          /></a>
+          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+
+          <div class="hamburger">
+            <button href="">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </button>
+          </div>
+        </div>
+        <div class="nav-space">
+          <div class="items">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+                    <li>
+                        <a href="#"
+                          ><img src="{% static 'images/plus-square.svg' %}" height="23px"
+                        /></a>
+                    </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-postpage">
+      {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    <div class="message__text">
+                      <small style="margin-right: auto">{{ message }}</small>
+                      <button onclick="switchOff()">
+                        <img src="{% static '/images/exit.svg' %}" />
+                      </button>
+                    </div>
+                </div>
+        {% endfor %}
+        {% endif %}
+      <div class="post-page">
+        <div class="central-post">
+          <div class="post-image"></div>
+          <div class="post-page__text">
+            <h1>The best Netflix series of All Times</h1>
+            <div class="post-details">
+              <small><strong>Date: </strong> 12/4/2021</small>
+              <small><strong>Author: </strong> BlockBusterGirl</small>
+            </div>
+
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+              dignissimos deserunt fugit rerum laudantium architecto, provident
+              doloribus expedita commodi a ratione iusto error aliquid
+              voluptatem impedit. Consequuntur rerum odio sapiente reiciendis
+              quos quia delectus illo amet veniam obcaecati magnam fugiat sit
+              voluptatibus modi molestias harum dignissimos consectetur aut
+              vitae, numquam ipsa laudantium in illum. Debitis est et provident
+              ipsam fugit rem harum nostrum iure, earum dolor error totam
+              explicabo sapiente recusandae ex! Totam aliquid dolorem cumque
+              rem, maxime doloribus hic? <br /><br />
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+              dignissimos deserunt fugit rerum laudantium architecto, provident
+              doloribus expedita commodi a ratione iusto error aliquid
+              voluptatem impedit. Consequuntur rerum odio sapiente reiciendis
+              quos quia delectus illo amet veniam obcaecati magnam fugiat sit
+              voluptatibus modi molestias harum dignissimos consectetur aut
+              vitae, numquam ipsa laudantium in illum. Debitis est et provident
+              ipsam fugit rem harum nostrum iure, earum dolor error totam
+              explicabo sapiente recusandae ex! Totam aliquid dolorem cumque
+              rem, maxime doloribus hic? <br /><br />
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+              dignissimos deserunt fugit rerum laudantium architecto, provident
+              doloribus expedita commodi a ratione iusto error aliquid
+              voluptatem impedit. Consequuntur rerum odio sapiente reiciendis
+              quos quia delectus illo amet veniam obcaecati magnam fugiat sit
+              voluptatibus modi molestias harum dignissimos consectetur aut
+              vitae, numquam ipsa laudantium in illum. Debitis est et provident
+              ipsam fugit rem harum nostrum iure, earum dolor error totam
+              explicabo sapiente recusandae ex! Totam aliquid dolorem cumque
+              rem, maxime doloribus hic? <br /><br />
+            </p>
+          </div>
+          <div class="social-element" style="margin-bottom: 1rem">
+            <a href="#" class="one-like"
+              ><img src="{% static '/images/heart-fill.svg' %}" alt="likes"
+            /></a>
+            <small>Likes: 25</small>
+            <img src="{% static '/images/eye.svg' %}" alt="views" />
+            <small>Views: 345</small>
+          </div>
+          <hr />
+          <div
+            class="feedback-call"
+            style="color: rgba(0, 0, 0, 0.4); line-height: 1.3"
+          >
+            <small
+              >If you have any comment, feedback or suggestion please visit the
+              Feedbacks page. <br />There you can write emails directly to me.
+              <br />Thanks, <br />
+              @BlockBusterGirl</small
+            >
+          </div>
+        </div>
+
+        <aside class="side-post">
+          <div class="newsletter">
+            <h3>Newsletter</h3>
+            <small
+              >Subscribe to my Newsletter to receive updates everytime a new
+              post comes out!</small
+            >
+            <form method="POST">
+              <input type="text" name="subscriber-email"
+              placeholder="youremail@mail.com"><br />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+          <div class="recent-post">
+            <h3>Latest Posts</h3>
+            <div class="recent-post__card">
+              <a href="#">The perfect Sunday Night Horror Movies...</a>
+            </div>
+            <div class="recent-post__card">
+              <a href="#">Biggest classics You didn't know actually suck</a>
+            </div>
+            <div class="recent-post__card">
+              <a href="#">Sequels are always worse...or Are They?</a>
+            </div>
+          </div>
+        </aside>
+
+        <div class="social__share">
+          <button onclick="showShareIcons()">Share</button>
+          <div class="social__window hidden">
+            <a href="#"
+              ><img src="./static/images/facebook.svg" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="./static/images/twitter.svg" alt="facebook"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer">
+        <div class="upper-footer">
+          <div class="icons">
+            <a href="#"
+              ><img src="{% static '/images/facebook-light.svg' %}" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
+            /></a>
+          </div>
+        </div>
+        <div class="lower-footer">
+          <div class="footnotes">
+            <p>@BlockBusterGirl</p>
+
+            <p><a href="#">Contact Me</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+<script src="{% static '/js/app.js' %}"></script>
+  </body>
+</html>

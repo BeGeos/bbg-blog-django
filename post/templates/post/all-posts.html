@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Mobile Navbar -->
+    <div class="navbar__mobile">
+          <div class="items__mobile">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+              <li><a href="#">CONTACT</a></li>
+            </ul>
+          </div>
+        </div>
+
+<!-- Main Navbar -->
+    <nav>
+      <div class="navbar">
+        <div class="upper-navbar">
+          <div class="logo">
+            <img src="{% static '/images/logo-marti.svg' %}" />
+          </div>
+          <a href="#"
+            ><img src="{% static '/images/facebook.svg' %}" alt="facebook"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
+          /></a>
+          <a href="#"
+            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
+          /></a>
+          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+
+          <div class="hamburger">
+            <button href="">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </button>
+          </div>
+        </div>
+        <div class="nav-space">
+          <div class="items">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">NEWS</a></li>
+              <li><a href="#">BLOG</a></li>
+              <li><a href="#">ABOUT</a></li>
+
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+                    <li>
+                        <a href="#"
+                          ><img src="{% static 'images/plus-square.svg' %}" height="23px"
+                        /></a>
+                    </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="cancel__action">
+      <div class="cancel__container">
+        <h2>Are you sure to delete it?</h2>
+        <div class="cancel__buttons">
+          <a href="#">Yes</a>
+          <a onclick="cancelNoOption()">No</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- If messages in request -->
+    <main class="main-postpage">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    <div class="message__text">
+                      <small style="margin-right: auto">{{ message }}</small>
+                      <button onclick="switchOff()">
+                        <img src="{% static '/images/exit.svg' %}" />
+                      </button>
+                    </div>
+                </div>
+        {% endfor %}
+        {% endif %}
+
+      <div class="search">
+        <div class="search__bar-mobile">
+          <input type="text" placeholder="Search..." />
+        </div>
+        <ul>
+          <li>
+            <a href="#">Most Recent</a>
+          </li>
+          <li><a href="#">Most Liked</a></li>
+          <li><a href="#">Most Viewed</a></li>
+        </ul>
+        <div class="search__bar">
+          <a href="#"><img src="{% static '/images/search.svg' %}" height="20px" /></a>
+          <input type="text" placeholder="Search..." />
+        </div>
+      </div>
+      <div class="all-posts">
+          <!-- Single Post card -->
+        <div class="single-post wide">
+          <div class="post__img">
+            <img src="{% static '/images/default.jpg' %}" />
+          </div>
+          <div class="post__text">
+            <h3>
+              <a href="#"
+                >The best Netflix series of All Times</a
+              >
+            </h3>
+            <p>
+              Netflix can really pull something interesting out of the hat, but
+              which has been their bestest best?
+            </p>
+            <div id="single-tag">
+              <ul>
+                <li>Horror</li>
+                <li>Western</li>
+                <li>Space</li>
+                <li>SciFi</li>
+                <li>Romance</li>
+                <li>walk</li>
+              </ul>
+            </div>
+              {% if request.user.is_authenticated and request.user.is_superuser%}
+                <div class="post__actions">
+                  <a href="#">Update</a>
+                  <a onclick="showCancelOptions()">Delete</a>
+                </div>
+              {% endif %}
+          </div>
+          <div class="post__stats">
+            <small
+              >12/4/2021 <br />
+              by BlockBusterGirl</small
+            >
+            <div class="post__likes">
+              <img src="{% static '/images/heart-fill.svg' %}" />
+              <p>25</p>
+              <img src="{% static '/images/eye.svg' %}" alt="views" />
+              <p>345</p>
+            </div>
+          </div>
+        </div>
+          <!-- end post card -->
+
+      </div>
+    </main>
+    <footer>
+      <div class="footer">
+        <div class="upper-footer">
+          <div class="icons">
+            <a href="#"
+              ><img src="{% static '/images/facebook-light.svg' %}" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
+            /></a>
+            <a href="#"
+              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
+            /></a>
+          </div>
+        </div>
+        <div class="lower-footer">
+          <div class="footnotes">
+            <p>@BlockBusterGirl</p>
+
+            <p><a href="#">Contact Me</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+<script src="{% static '/js/app.js' %}"></script>
+  </body>
+</html>
