@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Update Post</title>
+    <title>{{ news.title }}</title>
     <link rel="stylesheet" href="{% static '/css/style.css' %}" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -63,15 +63,21 @@
               <li><a href="#">NEWS</a></li>
               <li><a href="#">BLOG</a></li>
               <li><a href="#">ABOUT</a></li>
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+                    <li>
+                        <a href="{% url 'create-news' %}"
+                          ><img src="{% static 'images/plus-square.svg' %}" height="23px"
+                        /></a>
+                    </li>
+                {% endif %}
             </ul>
           </div>
         </div>
       </div>
     </nav>
 
-    <!-- If messages in request -->
     <main class="main-postpage">
-        {% if messages %}
+      {% if messages %}
             {% for message in messages %}
                 <div class="message">
                     <div class="message__text">
@@ -83,67 +89,77 @@
                 </div>
         {% endfor %}
         {% endif %}
+      <div class="post-page">
+        <div class="central-post">
+          <div class="post-image"></div>
+          <div class="post-page__text">
+            <h1>{{ news.title }}</h1>
+            <div class="post-details">
+              <small><strong>Date: </strong> {{ news.created_on }}</small>
+              <small><strong>Author: </strong> {{ news.author }}</small>
+            </div>
 
-        <!-- Create Post form -->
-        <div class="author">
-        <h2 style="text-align: center">Update Post...</h2>
-        <form method="POST">
-          {% csrf_token %}
-          <label for="title"> Title: </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value="{{ post.title }}"
-          />
-          <label for="summary">Summary: </label>
-          <input
-            type="text"
-            id="summary"
-            name="summary"
-            value="{{ post.summary }}"
-          />
-          <label for="text-post">Post:</label>
-          <textarea
-            id="text-post"
-            name="text-post"
-            cols="8"
-            rows="18"
+            <p>
+              {{ news.news }}
+            </p>
+          </div>
+          <div class="social-element" style="margin-bottom: 1rem">
+            <a href="#" class="one-like"
+              ><img src="{% static '/images/heart-fill.svg' %}" alt="likes"
+            /></a>
+            <small>Likes: {{ news.likes }}</small>
+            <img src="{% static '/images/eye.svg' %}" alt="views" />
+            <small>Views: {{ news.views }}</small>
+          </div>
+          <hr />
+          <div
+            class="feedback-call"
+            style="color: rgba(0, 0, 0, 0.4); line-height: 1.3"
+          >
+            <small
+              >If you have any comment, feedback or suggestion and want to get in touch, please visit the
+              Contact Me page. There you can write emails directly to me.
+              <br />Thanks, <br />
+              @BlockBusterGirl</small
+            >
+          </div>
+        </div>
 
-          >{{ post.post }}</textarea>
-          <div class="form__images">
-            <label for="thumbnail">Cover Pic: </label>
-            <input
-              type="file"
-              id="thumbnail"
-              name="thumbnail"
-              style="border: none"
-            />
-            <hr />
-            <input
-              type="file"
-              id="files"
-              name="post-pics"
-              multiple
-              style="border: none"
-            />
+        <aside class="side-post">
+          <div class="newsletter">
+            <h3>Newsletter</h3>
+            <small
+              >Subscribe to my Newsletter to receive updates everytime a new
+              post comes out!</small
+            >
+            <form method="POST">
+              <input type="text" name="subscriber-email"
+              placeholder="youremail@mail.com"><br />
+              <button type="submit">Subscribe</button>
+            </form>
           </div>
-          <div class="form__tags">
-            <label for="tags">Tags: </label>
-            <input id="tags"
-              type="text"
-              name="tags"
-              placeholder="e.g.: tag1, tag2, tag3..."
-            />
+          <div class="recent-post">
+            <h3>Latest News</h3>
+            {% for each in recent_news %}
+              <div class="recent-post__card">
+              <a href="{% url 'single-news' each.slug %}">{{ each.title }}</a>
+            </div>
+            {% endfor %}
           </div>
+        </aside>
 
-          <div class="form__button">
-            <button type="submit">Update</button>
-            <button disabled><a href="{% url 'all-posts' %}">Cancel</a></button>
+        <div class="social__share">
+          <button onclick="showShareIcons()">Share</button>
+          <div class="social__window hidden">
+            <a href="#"
+              ><img src="./static/images/facebook.svg" alt="facebook"
+            /></a>
+            <a href="#"
+              ><img src="./static/images/twitter.svg" alt="facebook"
+            /></a>
           </div>
-        </form>
+        </div>
       </div>
-
     </main>
     <footer>
       <div class="footer">

@@ -2,4 +2,4 @@ from django.shortcuts import render
 
 
 def subscribe(request):
-    pass
+    return render(request, "newsletter/subscribe.html")

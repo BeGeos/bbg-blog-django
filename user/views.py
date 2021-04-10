@@ -11,7 +11,9 @@ def home(request):
 
 
 def user_account(request):
-    return render(request, "user/test.html")
+    if request.user.is_authenticated and request.user.is_superuser:
+        return render(request, "user/test.html")
+    return redirect("homepage")
 
 
 def login(request):

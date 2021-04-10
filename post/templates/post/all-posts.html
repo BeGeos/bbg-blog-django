@@ -66,7 +66,7 @@
 
                 {% if request.user.is_authenticated and request.user.is_superuser %}
                     <li>
-                        <a href="#"
+                        <a href="{% url 'create-post' %}"
                           ><img src="{% static 'images/plus-square.svg' %}" height="23px"
                         /></a>
                     </li>
@@ -80,7 +80,7 @@
       <div class="cancel__container">
         <h2>Are you sure to delete it?</h2>
         <div class="cancel__buttons">
-          <a href="#">Yes</a>
+          <a class="yes-button" href="à">Yes</a>
           <a onclick="cancelNoOption()">No</a>
         </div>
       </div>
@@ -119,51 +119,50 @@
       </div>
       <div class="all-posts">
           <!-- Single Post card -->
-        <div class="single-post wide">
+        {% for post in posts %}
+          <div class="single-post wide">
           <div class="post__img">
             <img src="{% static '/images/default.jpg' %}" />
           </div>
           <div class="post__text">
             <h3>
-              <a href="#"
-                >The best Netflix series of All Times</a
+              <a href="{% url 'single-post' post.slug %}"
+                >{{ post.title }}</a
               >
             </h3>
             <p>
-              Netflix can really pull something interesting out of the hat, but
-              which has been their bestest best?
+              {{ post.summary }}
             </p>
             <div id="single-tag">
               <ul>
-                <li>Horror</li>
-                <li>Western</li>
-                <li>Space</li>
-                <li>SciFi</li>
-                <li>Romance</li>
-                <li>walk</li>
+                {% for tag in post.tags.all %}
+                  <li>{{ tag }}</li>
+                {% endfor %}
               </ul>
             </div>
               {% if request.user.is_authenticated and request.user.is_superuser%}
                 <div class="post__actions">
-                  <a href="#">Update</a>
-                  <a onclick="showCancelOptions()">Delete</a>
+                  <a href="{% url 'update-post' post.slug %}">Update</a>
+                  <a onclick="showCancelOptions('{{ post.slug }}')">Delete</a>
                 </div>
               {% endif %}
           </div>
           <div class="post__stats">
             <small
-              >12/4/2021 <br />
-              by BlockBusterGirl</small
+              >{{ post.created_on }} <br />
+              by {{ post.author }}</small
             >
             <div class="post__likes">
               <img src="{% static '/images/heart-fill.svg' %}" />
-              <p>25</p>
+              <p>{{ post.likes }}</p>
               <img src="{% static '/images/eye.svg' %}" alt="views" />
-              <p>345</p>
+              <p>{{ post.views }}</p>
             </div>
           </div>
         </div>
           <!-- end post card -->
+        {% endfor %}
+
 
       </div>
     </main>

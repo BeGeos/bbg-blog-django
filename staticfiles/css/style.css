@@ -664,7 +664,7 @@ nav {
   justify-content: space-around;
 }
 
-.form__button a {
+.form__button button {
   background: #161a1d;
   color: white;
   border: none;
@@ -680,11 +680,11 @@ nav {
   transition: background 0.2s ease-in-out;
 }
 
-.form__button a:nth-child(1):hover {
+.form__button button:nth-child(1):hover {
   background: #55a630;
 }
 
-.form__button a:nth-child(2):hover {
+.form__button button:nth-child(2):hover {
   background: #ba181b;
 }
 
@@ -825,6 +825,7 @@ nav {
 .feedback-form button {
   padding: 12px;
   font-weight: 700;
+  font-size: 21px;
   width: 100%;
   background: #ba181b;
   color: white;

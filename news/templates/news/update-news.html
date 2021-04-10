@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Update Post</title>
+    <title>Update News</title>
     <link rel="stylesheet" href="{% static '/css/style.css' %}" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -86,7 +86,7 @@
 
         <!-- Create Post form -->
         <div class="author">
-        <h2 style="text-align: center">Update Post...</h2>
+        <h2 style="text-align: center">Update News...</h2>
         <form method="POST">
           {% csrf_token %}
           <label for="title"> Title: </label>
@@ -94,23 +94,23 @@
             type="text"
             id="title"
             name="title"
-            value="{{ post.title }}"
+            value="{{ news.title }}"
           />
           <label for="summary">Summary: </label>
           <input
             type="text"
             id="summary"
             name="summary"
-            value="{{ post.summary }}"
+            value="{{ news.summary }}"
           />
-          <label for="text-post">Post:</label>
+          <label for="text-news">News:</label>
           <textarea
-            id="text-post"
-            name="text-post"
+            id="text-news"
+            name="text-news"
             cols="8"
             rows="18"
 
-          >{{ post.post }}</textarea>
+          >{{ news.news }}</textarea>
           <div class="form__images">
             <label for="thumbnail">Cover Pic: </label>
             <input
@@ -139,7 +139,7 @@
 
           <div class="form__button">
             <button type="submit">Update</button>
-            <button disabled><a href="{% url 'all-posts' %}">Cancel</a></button>
+            <button disabled><a href="{% url 'all-news' %}">Cancel</a></button>
           </div>
         </form>
       </div>

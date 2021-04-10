@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Update Post</title>
+    <title>Create News</title>
     <link rel="stylesheet" href="{% static '/css/style.css' %}" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -86,31 +86,15 @@
 
         <!-- Create Post form -->
         <div class="author">
-        <h2 style="text-align: center">Update Post...</h2>
+        <h2 style="text-align: center">Create News...</h2>
         <form method="POST">
           {% csrf_token %}
           <label for="title"> Title: </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value="{{ post.title }}"
-          />
+          <input type="text" id="title" name="title" placeholder="Enter title here..." />
           <label for="summary">Summary: </label>
-          <input
-            type="text"
-            id="summary"
-            name="summary"
-            value="{{ post.summary }}"
-          />
-          <label for="text-post">Post:</label>
-          <textarea
-            id="text-post"
-            name="text-post"
-            cols="8"
-            rows="18"
-
-          >{{ post.post }}</textarea>
+          <input type="text" id="summary" name="summary" placeholder="Enter summary here..." />
+          <label for="text-news">News:</label>
+          <textarea id="text-news" cols="8" rows="18" name="text-news"></textarea>
           <div class="form__images">
             <label for="thumbnail">Cover Pic: </label>
             <input
@@ -136,10 +120,9 @@
               placeholder="e.g.: tag1, tag2, tag3..."
             />
           </div>
-
           <div class="form__button">
-            <button type="submit">Update</button>
-            <button disabled><a href="{% url 'all-posts' %}">Cancel</a></button>
+            <button type="submit">Submit</button>
+            <button disabled><a href="{% url 'all-news' %}">Cancel</a></button>
           </div>
         </form>
       </div>

@@ -15,9 +15,11 @@ const switchOff = () => {
   message.classList.add("switch-off");
 };
 
-const showCancelOptions = () => {
+const showCancelOptions = (slug) => {
   let options = document.querySelector(".cancel__action");
+  let link = document.querySelector(".yes-button");
   options.style.display = "flex";
+  link.href = `delete/${slug}`
 };
 
 const cancelNoOption = () => {
