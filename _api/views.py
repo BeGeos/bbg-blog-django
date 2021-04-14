@@ -1,7 +1,124 @@
-from django.shortcuts import render
+from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+from newsletter.models import Newsletter
+from post.models import Post
+from news.models import News
+
+import json
+
+with open("variable.json") as file:
+    var = json.load(file)
+
+EMAIL_ADDRESS = var["EMAIL_HOST_USER"]
 
 
-# Create your views here.
+# Body parser for JSON data
+def body_parser(data):
+    body = data.decode("utf-8")
+    return json.loads(body)  # Returns the body as JSON
+
+
+@require_http_methods(["GET"])
 def home_api(request):
     return JsonResponse({"message": "This is the home api"})
+
+
+# Add subscription to Newsletter
+@require_http_methods(["POST"])
+def subscribe(request):
+    data = body_parser(request.body)
+    email = data.get("email")
+
+    # Check if email address already exists
+    exists = Newsletter.objects.filter(email=email).first()
+
+    if not exists:
+        new_sub = Newsletter.objects.create(email=email)
+
+        subject = "[BBG] - New Subscription"
+        message = f"Hello There\nThis message is only to confirm your subscription to " \
+                  f"the BlockBusterGirl blog.\n\nI am very happy to have you on board.\n" \
+                  f"If you have any questions, or preferences or comments don't hesitate to " \
+                  f"hit the contact me page.\n\n@BBG"
+
+        send_mail(subject=subject, message=message, from_email=EMAIL_ADDRESS,
+                  recipient_list=[new_sub.email], fail_silently=True)
+
+        return JsonResponse({"message": "New Subscription added!"}, status=200)
+    return JsonResponse({"message": "This address already exists"}, status=400)
+
+
+# Add likes to post and news
+@require_http_methods(["POST"])
+def add_post_likes(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug)
+        post.likes += 1
+        post.save()
+        # print(request.headers)
+        return JsonResponse({"likes": post.likes}, status=200)
+    except Exception as e:
+        return JsonResponse({"message": e}, status=500)
+
+
+@require_http_methods(["POST"])
+def add_news_likes(request, slug):
+    try:
+        news = get_object_or_404(News, slug=slug)
+        news.likes += 1
+        news.save()
+        return JsonResponse({"likes": news.likes}, status=200)
+    except Exception as e:
+        return JsonResponse({"message": e}, status=500)
+
+
+# Add views to post and news
+@require_http_methods(["POST"])
+def add_post_views(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug)
+        post.views += 1
+        post.save()
+        return JsonResponse({"message": "Updated"}, status=200)
+    except Exception as e:
+        return JsonResponse({"message": e}, status=500)
+
+
+@require_http_methods(["POST"])
+def add_news_views(request, slug):
+    try:
+        news = get_object_or_404(News, slug=slug)
+        news.views += 1
+        news.save()
+        return JsonResponse({"message": "Updated"}, status=200)
+    except Exception as e:
+        return JsonResponse({"message": e}, status=500)
+
+
+# Send Email API
+@require_http_methods(["POST"])
+def send_notification_email(request):
+    data = body_parser(request.body)
+    subscribers = Newsletter.objects.filter(active=True)
+    recipients = []  # Array of email addresses
+    for each in subscribers:
+        recipients.append(each.email)
+
+    context = {
+        "article": data
+    }
+
+    subject = "[BBG] - New article out!"
+    html_message = render_to_string("_api/notification-email.html", context)
+    plain_message = strip_tags(html_message)
+
+    send_mail(subject=subject, message=plain_message, from_email=EMAIL_ADDRESS,
+              recipient_list=recipients, html_message=html_message)
+
+    return JsonResponse({"message": "Accepted"}, status=200)
+

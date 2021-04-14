@@ -1,17 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.middleware.csrf import get_token
 
 from .models import Post, PostImage, PostTag
 
 import re
+import json
+import requests
+
+with open("variable.json") as file:
+    var = json.load(file)
 
 
 # Inner backend logic
 def slug_gen(title):
+    title = title.strip()
     return re.sub(r'\W+|\s+|_', "-", title).lower()
 
 
 def parse_tags(tags):
+    tags = tags.strip()
     return re.split(r',\s*', tags)
 
 
@@ -41,6 +49,20 @@ def create_post(request):
             tags = parse_tags(request.POST.get("tags"))
             for tag in tags:
                 PostTag.objects.create(post_id=new_post, tag=tag)
+
+            data = {
+                "title": new_post.title,
+                "summary": new_post.summary,
+                "link": var["BASE_URL"] + f"blog/post/{new_post.slug}"
+            }
+
+            csrf_token = get_token(request)
+            cookies = {"csrftoken": csrf_token}
+            # print(csrf_token)
+            headers = {"X-CSRFToken": csrf_token}
+
+            requests.post(var["BASE_URL"] + "_api/send-notification/",
+                          json=data, headers=headers, cookies=cookies)
 
             messages.success(request, 'Your new post was created successfully!')
             return redirect("all-posts")

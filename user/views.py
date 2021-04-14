@@ -4,14 +4,18 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 
+from newsletter.models import Newsletter
+
 
 # Main Homepage for the website
 def home(request):
+    # print(subscribers)
     return render(request, 'user/homepage.html')
 
 
 def user_account(request):
     if request.user.is_authenticated and request.user.is_superuser:
+        
         return render(request, "user/test.html")
     return redirect("homepage")
 

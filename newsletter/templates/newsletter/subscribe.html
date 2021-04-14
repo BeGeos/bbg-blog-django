@@ -10,7 +10,7 @@
   </head>
   <body>
     <main class="login__page">
-      <form method="POST">
+      <div class="subscribe__form">
         <div class="newsletter__title">
           <h2><a href="{% url 'homepage' %}">Subscribe</a></h2>
         </div>
@@ -25,10 +25,18 @@
             Subscribe to my Newsletter to receive updates everytime a new post
             comes out!
           </p>
-          <input type="text" name="email" placeholder="youremail@mail.com" required/>
-          <button type="submit">Subscribe</button>
+          <input
+            type="text"
+            name="email"
+            placeholder="youremail@mail.com"
+            required
+          />
+          <div class="ajax-response"></div>
+          {% csrf_token %}
+          <button onclick="subscribe()">Subscribe</button>
         </div>
-      </form>
+      </div>
     </main>
+    <script src="{% static '/js/app.js' %}"></script>
   </body>
 </html>

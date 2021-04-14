@@ -25,7 +25,7 @@ urlpatterns = [
     path("blog/", include("post.urls")),
     path("news/", include("news.urls")),
     path("account/", include("user.urls")),
-    path("api/", include("_api.urls")),
+    path("_api/", include("_api.urls")),
     path("newsletter/", include("newsletter.urls"))
 ]
 

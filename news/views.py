@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.middleware.csrf import get_token
 from django.contrib import messages
 
 from .models import News, NewsImage, NewsTag
 
 import re
+import json
+import requests
+
+with open("variable.json") as file:
+    var = json.load(file)
 
 
 # Inner backend logic
@@ -42,6 +48,21 @@ def create_news(request):
             tags = parse_tags(request.POST.get("tags"))
             for tag in tags:
                 NewsTag.objects.create(post_id=new_news, tag=tag)
+
+            # TODO Send notification to subscribers
+            data = {
+                    "title": new_news.title,
+                    "summary": new_news.summary,
+                    "link": var["BASE_URL"] + f"news/article/{new_news.slug}"
+                   }
+
+            csrf_token = get_token(request)
+            cookies = {"csrftoken": csrf_token}
+            # print(csrf_token)
+            headers = {"X-CSRFToken": csrf_token}
+
+            requests.post(var["BASE_URL"] + "_api/send-notification/",
+                          json=data, headers=headers, cookies=cookies)
 
             messages.success(request, 'Your new article was created successfully!')
             return redirect("all-news")
@@ -86,7 +107,6 @@ def delete_news(request, slug):
     """Delete logic, then redirect"""
     if request.user.is_authenticated and request.user.is_superuser:
         news = get_object_or_404(News, slug=slug)
-        # post = Post.objects.filter(slug=slug).first()
         news.delete()
         messages.success(request, 'The article was deleted successfully!')
         return redirect('all-news')
