@@ -5,9 +5,11 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from .serializer import PostSerializer, NewsSerializer
+
 from newsletter.models import Newsletter
-from post.models import Post
-from news.models import News
+from post.models import Post, PostImage, PostTag
+from news.models import News, NewsImage, NewsTag
 
 import json
 
@@ -122,3 +124,53 @@ def send_notification_email(request):
 
     return JsonResponse({"message": "Accepted"}, status=200)
 
+
+# Get all posts or news
+@require_http_methods(["GET"])
+def get_all_posts(request):
+    all_posts = Post.objects.all()
+    order = request.GET.get('order')
+    # print(order)
+    data = ""  # In case nothing come back
+
+    if not order or order == "date":
+        data = all_posts.order_by("-created_on")
+
+    if order == "views":
+        data = all_posts.order_by("-views", "-created_on")
+
+    if order == "likes":
+        data = all_posts.order_by("-likes", "-created_on")
+
+    serializer = PostSerializer(instance=data, many=True)
+
+    return JsonResponse({"data": serializer.data}, status=200)
+
+
+@require_http_methods(["GET"])
+def get_all_news(request):
+    all_news = News.objects.all()
+    order = request.GET.get('order')
+    # print(order)
+    data = ""  # In case nothing comes back
+
+    if not order or order == "date":
+        data = all_news.order_by("-created_on")
+
+    if order == "views":
+        data = all_news.order_by("-views", "-created_on")
+
+    if order == "likes":
+        data = all_news.order_by("-likes", "-created_on")
+
+    serializer = NewsSerializer(instance=data, many=True)
+
+    return JsonResponse({"data": serializer.data}, status=200)
+
+
+# Debugging
+def test_api(request):
+    records = Post.objects.all()
+    records = records.order_by("-views")
+    serializer = PostSerializer(instance=records, many=True)
+    return JsonResponse({"message": serializer.data})

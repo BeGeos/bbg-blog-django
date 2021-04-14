@@ -10,4 +10,7 @@ urlpatterns = [
     path('post/views/<slug>', views.add_post_views, name="add-post-views"),
     path('news/views/<slug>', views.add_news_views, name="add-news-views"),
     path('send-notification/', views.send_notification_email, name="notification-email"),
+    path('posts/all', views.get_all_posts, name="get-all-posts"),
+    path('news/all', views.get_all_news, name="get-all-news"),
+    path('test/', views.test_api, name="test-api")
 ]
