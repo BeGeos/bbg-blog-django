@@ -20,6 +20,9 @@ class PostImage(models.Model):
     image = models.ImageField(upload_to="post_pics")
     is_cover = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.image.url
+
 
 class PostTag(models.Model):
     tag = models.CharField(max_length=24)

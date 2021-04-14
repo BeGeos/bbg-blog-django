@@ -19,18 +19,18 @@
   <body>
     <!-- Mobile Navbar -->
     <div class="navbar__mobile">
-          <div class="items__mobile">
-            <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">NEWS</a></li>
-              <li><a href="#">BLOG</a></li>
-              <li><a href="#">ABOUT</a></li>
-              <li><a href="#">CONTACT</a></li>
-            </ul>
-          </div>
-        </div>
+      <div class="items__mobile">
+        <ul>
+          <li><a href="#">HOME</a></li>
+          <li><a href="#">NEWS</a></li>
+          <li><a href="#">BLOG</a></li>
+          <li><a href="#">ABOUT</a></li>
+          <li><a href="#">CONTACT</a></li>
+        </ul>
+      </div>
+    </div>
 
-<!-- Main Navbar -->
+    <!-- Main Navbar -->
     <nav>
       <div class="navbar">
         <div class="upper-navbar">
@@ -46,7 +46,9 @@
           <a href="#"
             ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
           /></a>
-          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+          <a href="#"
+            ><img src="{% static '/images/rss.svg' %}" alt="newsletter"
+          /></a>
 
           <div class="hamburger">
             <button href="">
@@ -64,13 +66,16 @@
               <li><a href="#">BLOG</a></li>
               <li><a href="#">ABOUT</a></li>
 
-                {% if request.user.is_authenticated and request.user.is_superuser %}
-                    <li>
-                        <a href="{% url 'create-post' %}"
-                          ><img src="{% static 'images/plus-square.svg' %}" height="23px"
-                        /></a>
-                    </li>
-                {% endif %}
+              {% if request.user.is_authenticated %}
+              <!-- and request.user.is_superuser -->
+              <li>
+                <a href="{% url 'create-post' %}"
+                  ><img
+                    src="{% static 'images/plus-square.svg' %}"
+                    height="23px"
+                /></a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -88,18 +93,16 @@
 
     <!-- If messages in request -->
     <main class="main-postpage">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message">
-                    <div class="message__text">
-                      <small style="margin-right: auto">{{ message }}</small>
-                      <button onclick="switchOff()">
-                        <img src="{% static '/images/exit.svg' %}" />
-                      </button>
-                    </div>
-                </div>
-        {% endfor %}
-        {% endif %}
+      {% if messages %} {% for message in messages %}
+      <div class="message">
+        <div class="message__text">
+          <small style="margin-right: auto">{{ message }}</small>
+          <button onclick="switchOff()">
+            <img src="{% static '/images/exit.svg' %}" />
+          </button>
+        </div>
+      </div>
+      {% endfor %} {% endif %}
 
       <div class="search">
         <div class="search__bar-mobile">
@@ -107,45 +110,62 @@
         </div>
         <ul>
           <li>
-            <a href="#">Most Recent</a>
+            <button
+              id="recent"
+              onclick="getAllPosts('date', '{{ request.user.is_superuser }}')"
+            >
+              Most Recent
+            </button>
           </li>
-          <li><a href="#">Most Liked</a></li>
-          <li><a href="#">Most Viewed</a></li>
+          <li>
+            <button
+              id="liked"
+              onclick="getAllPosts('likes', '{{ request.user.is_superuser }}')"
+            >
+              Most Liked
+            </button>
+          </li>
+          <li>
+            <button
+              id="viewed"
+              onclick="getAllPosts('views', '{{ request.user.is_superuser }}')"
+            >
+              Most Viewed
+            </button>
+          </li>
         </ul>
         <div class="search__bar">
-          <a href="#"><img src="{% static '/images/search.svg' %}" height="20px" /></a>
+          <a href="#"
+            ><img src="{% static '/images/search.svg' %}" height="20px"
+          /></a>
           <input type="text" placeholder="Search..." />
         </div>
       </div>
       <div class="all-posts">
-          <!-- Single Post card -->
+        <!-- Single Post card -->
         {% for post in posts %}
-          <div class="single-post wide">
+        <div class="single-post wide">
           <div class="post__img">
             <img src="{% static '/images/default.jpg' %}" />
           </div>
           <div class="post__text">
             <h3>
-              <a href="{% url 'single-post' post.slug %}"
-                >{{ post.title }}</a
-              >
+              <a href="{% url 'single-post' post.slug %}">{{ post.title }}</a>
             </h3>
-            <p>
-              {{ post.summary }}
-            </p>
+            <p>{{ post.summary }}</p>
             <div id="single-tag">
               <ul>
                 {% for tag in post.tags.all %}
-                  <li>{{ tag }}</li>
+                <li>{{ tag }}</li>
                 {% endfor %}
               </ul>
             </div>
-              {% if request.user.is_authenticated and request.user.is_superuser%}
-                <div class="post__actions">
-                  <a href="{% url 'update-post' post.slug %}">Update</a>
-                  <a onclick="showCancelOptions('{{ post.slug }}')">Delete</a>
-                </div>
-              {% endif %}
+            {% if request.user.is_authenticated and request.user.is_superuser%}
+            <div class="post__actions">
+              <a href="{% url 'update-post' post.slug %}">Update</a>
+              <a onclick="showCancelOptions('{{ post.slug }}')">Delete</a>
+            </div>
+            {% endif %}
           </div>
           <div class="post__stats">
             <small
@@ -160,10 +180,8 @@
             </div>
           </div>
         </div>
-          <!-- end post card -->
+        <!-- end post card -->
         {% endfor %}
-
-
       </div>
     </main>
     <footer>
@@ -171,13 +189,19 @@
         <div class="upper-footer">
           <div class="icons">
             <a href="#"
-              ><img src="{% static '/images/facebook-light.svg' %}" alt="facebook"
+              ><img
+                src="{% static '/images/facebook-light.svg' %}"
+                alt="facebook"
             /></a>
             <a href="#"
-              ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
+              ><img
+                src="{% static '/images/instagram-light.svg' %}"
+                alt="instagram"
             /></a>
             <a href="#"
-              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
+              ><img
+                src="{% static '/images/twitter-light.svg' %}"
+                alt="twitter"
             /></a>
           </div>
         </div>
@@ -190,6 +214,6 @@
         </div>
       </div>
     </footer>
-<script src="{% static '/js/app.js' %}"></script>
+    <script src="{% static '/js/app.js' %}"></script>
   </body>
 </html>

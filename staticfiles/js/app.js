@@ -1,4 +1,6 @@
 const baseUrl = "http://localhost:8000/_api/";
+const sourceUrl = "http://localhost:8000/";
+const staticUrl = "http://localhost:8000/staticfiles/";
 
 const showMobileNavbar = () => {
   const mobileNavbar = document.querySelector(".navbar__mobile");
@@ -199,4 +201,70 @@ const addNewsViews = async (slug) => {
 
   const response = await request.json();
   console.log(response.message);
+};
+
+// Add posts and news calls to API for most recent, viewed or liked
+const getAllPosts = async (order, isSuper) => {
+  let queryURL = baseUrl + "posts/all?order=" + order;
+  let data = await fetch(queryURL, { method: "GET" });
+  let postDiv = document.querySelector(".all-posts");
+
+  let response = await data.json();
+
+  let allCards = "";
+
+  for (let post of response.data) {
+    // let post = response.data[i];
+    let postTags = "";
+
+    // Create the Tags li
+    for (let k = 0; k < post.tags.lenght; k++) {
+      postTags += `<li>${post.tags[i]}</li>`;
+    }
+
+    let updateActions = "";
+
+    // Create the user Update and Delete functions
+    if (isSuper == "True") {
+      updateActions += `<div class="post__actions">
+      <a href="${sourceUrl}blog/update-post/${post.slug}">Update</a>
+      <a onclick="showCancelOptions('${post.slug}')">Delete</a>
+    </div>`;
+    }
+
+    let postCard = `<div class="single-post wide">
+    <div class="post__img">
+      <img src="${staticUrl}images/default.jpg" />
+    </div>
+    <div class="post__text">
+      <h3>
+        <a href="${sourceUrl}blog/post/${post.slug}">${post.title}</a>
+      </h3>
+      <p>${post.summary}</p>
+      <div id="single-tag">
+        <ul>
+          ${postTags}
+        </ul>
+      </div>
+      ${updateActions}
+    </div>
+    <div class="post__stats">
+      <small
+        >${post["created_on"]} <br />
+        by ${post.author}</small
+      >
+      <div class="post__likes">
+        <img src="${staticUrl}images/heart-fill.svg" />
+        <p>${post.likes}</p>
+        <img src="${staticUrl}images/eye.svg" alt="views" />
+        <p>${post.views}</p>
+      </div>
+    </div>
+  </div>`;
+
+    allCards += postCard;
+  }
+
+  postDiv.innerHTML = allCards;
+  // console.log("done!");
 };

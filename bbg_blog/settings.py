@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'news.apps.NewsConfig',
     '_api.apps.ApiConfig',
-    'newsletter.apps.NewsletterConfig'
+    'newsletter.apps.NewsletterConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
