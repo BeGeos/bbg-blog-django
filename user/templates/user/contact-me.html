@@ -72,6 +72,7 @@
       <div class="feedback-form">
         <h2 style="text-align: center">Contact Me</h2>
         <form method="POST">
+          {% csrf_token %}
           <label for="user">Name*: </label>
           <input
             type="text"
@@ -92,6 +93,7 @@
             id="feedback"
             cols="18"
             rows="15"
+            required
           ></textarea>
           <button type="submit">Send</button>
         </form>
