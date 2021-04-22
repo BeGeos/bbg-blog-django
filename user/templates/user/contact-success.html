@@ -68,34 +68,16 @@
       </div>
     </nav>
     <main class="main-postpage">
-      <div class="feedback-form">
-        <h2 style="text-align: center">Contact Me</h2>
-        <form method="POST">
-          {% csrf_token %}
-          <label for="user">Name*: </label>
-          <input
-            type="text"
-            id="user"
-            name="user"
-            placeholder="Name here please..."
-            required
-          />
-          <label for="email">Email: </label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            placeholder="Email here please..."
-          />
-          <textarea
-            name="feedback"
-            id="feedback"
-            cols="18"
-            rows="15"
-            required
-          ></textarea>
-          <button type="submit">Send</button>
-        </form>
+      <div class="feedback-form success">
+        <h2 style="text-align: center">Thank You!</h2>
+          <div class="success-icon">
+              <img src="{% static '/images/check-green.svg' %}" alt="success-icon" width="55px">
+          </div>
+        <p>
+            Thank you very much to get in contact!
+        </p>
+          <p>I will reply as soon as I can</p>
+          <small>@BlockBusterGirl</small>
       </div>
     </main>
 

@@ -21,11 +21,11 @@
     <div class="navbar__mobile">
       <div class="items__mobile">
         <ul>
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">NEWS</a></li>
-          <li><a href="#">BLOG</a></li>
-          <li><a href="#">ABOUT</a></li>
-          <li><a href="#">CONTACT</a></li>
+          <li><a href="{% url 'homepage' %}">HOME</a></li>
+          <li><a href="{% url 'all-news' %}">NEWS</a></li>
+          <li><a href="{% url 'all-posts' %}">BLOG</a></li>
+          <li><a href="{% url 'about-me' %}">ABOUT</a></li>
+          <li><a href="{% url 'contact-me' %}">CONTACT</a></li>
         </ul>
       </div>
     </div>
@@ -46,7 +46,7 @@
           <a href="#"
             ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
           /></a>
-          <a href="#"
+          <a href="{% url 'subscribe' %}"
             ><img src="{% static '/images/rss.svg' %}" alt="newsletter"
           /></a>
 
@@ -61,10 +61,11 @@
         <div class="nav-space">
           <div class="items">
             <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">NEWS</a></li>
-              <li><a href="#">BLOG</a></li>
-              <li><a href="#">ABOUT</a></li>
+              <li><a href="{% url 'homepage' %}">HOME</a></li>
+          <li><a href="{% url 'all-news' %}">NEWS</a></li>
+          <li><a href="{% url 'all-posts' %}">BLOG</a></li>
+          <li><a href="{% url 'about-me' %}">ABOUT</a></li>
+
               {% if request.user.is_authenticated and request.user.is_superuser %}
 
               <li>
@@ -106,12 +107,11 @@
           </div>
           <div class="social-element" style="margin-bottom: 1rem">
             {% csrf_token %}
-            <a
-              href="#"
+            <button
               class="one-like"
               onclick="addPostLike('{{ post.slug }}')"
               ><img src="{% static '/images/heart-fill.svg' %}" alt="likes"
-            /></a>
+            /></button>
             <small class="likes">Likes: {{ post.likes }}</small>
             <img src="{% static '/images/eye.svg' %}" alt="views" />
             <small class="views">Views: {{ post.views }}</small>
@@ -188,18 +188,14 @@
                 src="{% static '/images/instagram-light.svg' %}"
                 alt="instagram"
             /></a>
-            <a href="#"
-              ><img
-                src="{% static '/images/twitter-light.svg' %}"
-                alt="twitter"
-            /></a>
+
           </div>
         </div>
         <div class="lower-footer">
           <div class="footnotes">
             <p>@BlockBusterGirl</p>
 
-            <p><a href="#">Contact Me</a></p>
+            <p><a href="{% url 'contact-me' %}">Contact Me</a></p>
           </div>
         </div>
       </div>

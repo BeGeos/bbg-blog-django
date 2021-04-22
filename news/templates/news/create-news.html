@@ -21,11 +21,11 @@
     <div class="navbar__mobile">
           <div class="items__mobile">
             <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">NEWS</a></li>
-              <li><a href="#">BLOG</a></li>
-              <li><a href="#">ABOUT</a></li>
-              <li><a href="#">CONTACT</a></li>
+              <li><a href="{% url 'homepage' %}">HOME</a></li>
+          <li><a href="{% url 'all-news' %}">NEWS</a></li>
+          <li><a href="{% url 'all-posts' %}">BLOG</a></li>
+          <li><a href="{% url 'about-me' %}">ABOUT</a></li>
+          <li><a href="{% url 'contact-me' %}">CONTACT</a></li>
             </ul>
           </div>
         </div>
@@ -43,10 +43,8 @@
           <a href="#"
             ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
           /></a>
-          <a href="#"
-            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
-          /></a>
-          <a href="#"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
+
+          <a href="{% url 'subscribe' %}"><img src="{% static '/images/rss.svg' %}" alt="newsletter" /></a>
 
           <div class="hamburger">
             <button href="">
@@ -59,10 +57,11 @@
         <div class="nav-space">
           <div class="items">
             <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">NEWS</a></li>
-              <li><a href="#">BLOG</a></li>
-              <li><a href="#">ABOUT</a></li>
+              <li><a href="{% url 'homepage' %}">HOME</a></li>
+          <li><a href="{% url 'all-news' %}">NEWS</a></li>
+          <li><a href="{% url 'all-posts' %}">BLOG</a></li>
+          <li><a href="{% url 'about-me' %}">ABOUT</a></li>
+
             </ul>
           </div>
         </div>
@@ -87,14 +86,14 @@
         <!-- Create Post form -->
         <div class="author">
         <h2 style="text-align: center">Create News...</h2>
-        <form method="POST">
+        <form method="POST" enctype='multipart/form-data'>
           {% csrf_token %}
           <label for="title"> Title: </label>
           <input type="text" id="title" name="title" placeholder="Enter title here..." />
           <label for="summary">Summary: </label>
           <input type="text" id="summary" name="summary" placeholder="Enter summary here..." />
-          <label for="text-news">News:</label>
-          <textarea id="text-news" cols="8" rows="18" name="text-news"></textarea>
+          {{ form.media }}
+          {{ form.as_p }}
           <div class="form__images">
             <label for="thumbnail">Cover Pic: </label>
             <input
@@ -103,14 +102,8 @@
               name="thumbnail"
               style="border: none"
             />
-            <hr />
-            <input
-              type="file"
-              id="files"
-              name="post-pics"
-              multiple
-              style="border: none"
-            />
+
+
           </div>
           <div class="form__tags">
             <label for="tags">Tags: </label>
@@ -138,16 +131,14 @@
             <a href="#"
               ><img src="{% static '/images/instagram-light.svg' %}" alt="instagram"
             /></a>
-            <a href="#"
-              ><img src="{% static '/images/twitter-light.svg' %}" alt="twitter"
-            /></a>
+
           </div>
         </div>
         <div class="lower-footer">
           <div class="footnotes">
             <p>@BlockBusterGirl</p>
 
-            <p><a href="#">Contact Me</a></p>
+            <p><a href="{% url 'contact-me' %}">Contact Me</a></p>
           </div>
         </div>
       </div>

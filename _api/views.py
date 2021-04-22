@@ -1,5 +1,8 @@
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -143,7 +146,7 @@ def send_notification_email(request):
 def get_all_posts(request):
     all_posts = Post.objects.all()
     order = request.GET.get('order')
-    # print(order)
+    request.session.__setitem__("order-post", order)
     data = ""  # In case nothing come back
 
     if not order or order == "date":
@@ -164,6 +167,7 @@ def get_all_posts(request):
 def get_all_news(request):
     all_news = News.objects.all()
     order = request.GET.get('order')
+    request.session.__setitem__("order-news", order)
     # print(order)
     data = ""  # In case nothing comes back
 
@@ -182,8 +186,15 @@ def get_all_news(request):
 
 
 # Debugging
+@api_view(("GET",))
+@renderer_classes([JSONRenderer])
 def test_api(request):
+
     records = Post.objects.all()
     records = records.order_by("-views")
     serializer = PostSerializer(instance=records, many=True)
-    return JsonResponse({"message": serializer.data})
+    headers = {
+        "Items-Order": "views"
+    }
+    return Response(serializer.data, status=200, headers=headers)
+    # return JsonResponse({"message": serializer.data})

@@ -23,6 +23,10 @@ const switchOff = () => {
 };
 
 const showCancelOptions = (slug) => {
+let background = document.querySelector(".cancel__action");
+background.addEventListener("click", () => {
+    background.style.display = "none";
+})
   let options = document.querySelector(".cancel__action");
   let link = document.querySelector(".yes-button");
   options.style.display = "flex";
@@ -129,6 +133,7 @@ const singleSubscribe = async () => {
 // Add likes to post or news
 const addPostLike = async (slug) => {
   let likeNum = document.querySelector(".likes");
+  let likeBtn = document.querySelector(".one-like");
   let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
   let url = baseUrl + "post/like/" + slug;
 
@@ -144,6 +149,7 @@ const addPostLike = async (slug) => {
   const response = await request.json();
   if (request.status == 200) {
     likeNum.textContent = "Likes: " + response.likes;
+    likeBtn.setAttribute("disabled", "disabled")
   } else {
     console.log(response.message);
   }
@@ -151,6 +157,7 @@ const addPostLike = async (slug) => {
 
 const addNewsLike = async (slug) => {
   let likeNum = document.querySelector(".likes");
+  let likeBtn = document.querySelector(".one-like");
   let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
   let url = baseUrl + "news/like/" + slug;
 
@@ -165,7 +172,9 @@ const addNewsLike = async (slug) => {
 
   const response = await request.json();
   if (request.status == 200) {
+  console.log(response.likes)
     likeNum.textContent = "Likes: " + response.likes;
+    likeBtn.setAttribute("disabled", "disabled")
   } else {
     console.log(response.message);
   }
@@ -237,7 +246,7 @@ const getAllPosts = async (order, isSuper) => {
 
     let postCard = `<div class="single-post wide">
     <div class="post__img">
-      <img src="${staticUrl}images/default.jpg" />
+      <img src="${post.image}" />
     </div>
     <div class="post__text">
       <h3>
@@ -266,6 +275,71 @@ const getAllPosts = async (order, isSuper) => {
   </div>`;
 
     allCards += postCard;
+  }
+
+  postDiv.innerHTML = allCards;
+  // console.log("done!");
+};
+
+const getAllNews = async (order, isSuper) => {
+  let queryURL = baseUrl + "news/all?order=" + order;
+  let data = await fetch(queryURL, { method: "GET" });
+  let postDiv = document.querySelector(".all-posts");
+
+  let response = await data.json();
+
+  let allCards = "";
+
+  for (let news of response.data) {
+    // let post = response.data[i];
+    let newsTags = "";
+
+    // Create the Tags li
+    for (let k = 0; k < news.tags.lenght; k++) {
+      newsTags += `<li>${news.tags[i]}</li>`;
+    }
+
+    let updateActions = "";
+
+    // Create the user Update and Delete functions
+    if (isSuper == "True") {
+      updateActions += `<div class="post__actions">
+      <a href="${sourceUrl}news/update-news/${news.slug}">Update</a>
+      <a onclick="showCancelOptions('${news.slug}')">Delete</a>
+    </div>`;
+    }
+
+    let newsCard = `<div class="single-post wide">
+    <div class="post__img">
+      <img src="${news.image}" />
+    </div>
+    <div class="post__text">
+      <h3>
+        <a href="${sourceUrl}news/article/${news.slug}">${news.title}</a>
+      </h3>
+      <p>${news.summary}</p>
+      <div id="single-tag">
+        <ul>
+          ${newsTags}
+        </ul>
+      </div>
+      ${updateActions}
+    </div>
+    <div class="post__stats">
+      <small
+        >${news["created_on"]} <br />
+        by ${news.author}</small
+      >
+      <div class="post__likes">
+        <img src="${staticUrl}images/heart-fill.svg" />
+        <p>${news.likes}</p>
+        <img src="${staticUrl}images/eye.svg" alt="views" />
+        <p>${news.views}</p>
+      </div>
+    </div>
+  </div>`;
+
+    allCards += newsCard;
   }
 
   postDiv.innerHTML = allCards;

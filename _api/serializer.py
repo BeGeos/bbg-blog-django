@@ -14,4 +14,10 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class NewsSerializer(serializers.ModelSerializer):
-    pass
+    tags = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Post
+        fields = ["title", "summary", "post", "likes", "views",
+                  "created_on", "author", "slug", "tags",
+                  "image"]

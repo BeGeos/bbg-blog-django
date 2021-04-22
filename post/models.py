@@ -11,7 +11,7 @@ class Post(models.Model):
     created_on = models.DateField(auto_now_add=True)
     author = models.CharField(max_length=32)
     slug = models.SlugField(max_length=64)
-    image = models.ImageField(upload_to="post_pics/", default="../staticfiles/images/default.jpg")
+    image = models.ImageField(upload_to="post_pics/", default="default.jpg")
 
     def __str__(self):
         return self.title

@@ -61,18 +61,18 @@ def about_me(request):
 
 def contact_me(request):
     if request.method == "POST":
-        name = request.POST.get("user")
-        email = request.POST.get('email')
-        feedback = request.POST.get('feedback')
-        message = f"{feedback}\nby {email}"
-
-        subject = f"[BBG] - {name} has sent you a message"
-
-        send_mail(subject=subject, message=message, from_email=EMAIL_ADDRESS,
-                  recipient_list=[EMAIL_ADDRESS], fail_silently=True)
-        return redirect("contact-me")
+        # name = request.POST.get("user")
+        # email = request.POST.get('email')
+        # feedback = request.POST.get('feedback')
+        # message = f"{feedback}\nby {email}"
+        #
+        # subject = f"[BBG] - {name} has sent you a message"
+        #
+        # send_mail(subject=subject, message=message, from_email=EMAIL_ADDRESS,
+        #           recipient_list=[EMAIL_ADDRESS], fail_silently=True)
+        return redirect("contact-me-success")
     return render(request, 'user/contact-me.html')
 
 
 def contact_me_success(request):
-    pass
+    return render(request, "user/contact-success.html")

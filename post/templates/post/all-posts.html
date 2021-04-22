@@ -21,11 +21,11 @@
     <div class="navbar__mobile">
       <div class="items__mobile">
         <ul>
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">NEWS</a></li>
+          <li><a href="{% url 'homepage' %}">HOME</a></li>
+          <li><a href="{% url 'all-news' %}">NEWS</a></li>
           <li><a href="#">BLOG</a></li>
-          <li><a href="#">ABOUT</a></li>
-          <li><a href="#">CONTACT</a></li>
+          <li><a href="{% url 'about-me' %}">ABOUT</a></li>
+          <li><a href="{% url 'contact-me' %}">CONTACT</a></li>
         </ul>
       </div>
     </div>
@@ -43,10 +43,8 @@
           <a href="#"
             ><img src="{% static '/images/instagram.svg' %}" alt="instagram"
           /></a>
-          <a href="#"
-            ><img src="{% static '/images/twitter.svg' %}" alt="twitter"
-          /></a>
-          <a href="#"
+
+          <a href="{% url 'subscribe' %}"
             ><img src="{% static '/images/rss.svg' %}" alt="newsletter"
           /></a>
 
@@ -61,10 +59,11 @@
         <div class="nav-space">
           <div class="items">
             <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">NEWS</a></li>
-              <li><a href="#">BLOG</a></li>
-              <li><a href="#">ABOUT</a></li>
+              <li><a href="{% url 'homepage' %}">HOME</a></li>
+          <li><a href="{% url 'all-news' %}">NEWS</a></li>
+          <li><a href="#">BLOG</a></li>
+          <li><a href="{% url 'about-me' %}">ABOUT</a></li>
+
 
               {% if request.user.is_authenticated %}
               <!-- and request.user.is_superuser -->
@@ -146,7 +145,7 @@
         {% for post in posts %}
         <div class="single-post wide">
           <div class="post__img">
-            <img src="{% static '/images/default.jpg' %}" />
+            <img src="{{ post.image.url }}" />
           </div>
           <div class="post__text">
             <h3>
@@ -198,18 +197,14 @@
                 src="{% static '/images/instagram-light.svg' %}"
                 alt="instagram"
             /></a>
-            <a href="#"
-              ><img
-                src="{% static '/images/twitter-light.svg' %}"
-                alt="twitter"
-            /></a>
+
           </div>
         </div>
         <div class="lower-footer">
           <div class="footnotes">
             <p>@BlockBusterGirl</p>
 
-            <p><a href="#">Contact Me</a></p>
+            <p><a href="{% url 'contact-me' %}">Contact Me</a></p>
           </div>
         </div>
       </div>
