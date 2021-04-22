@@ -409,6 +409,7 @@ nav {
 .message {
   min-width: 100%;
   background: rgb(139, 230, 147, 0.4);
+  /* #87E796*/
   /* border: 2px solid rgb(100, 190, 115, 0.4); */
   min-height: 3rem;
   margin-top: 5px;
@@ -728,7 +729,7 @@ nav {
   background-image: url("../images/default.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 
 .post-details {
@@ -740,6 +741,7 @@ nav {
 }
 
 .newsletter {
+position: relative;
   min-height: 18rem;
   width: 15rem;
   margin-bottom: 3rem;
@@ -747,6 +749,20 @@ nav {
   background: #161a1d;
   color: white;
   padding: 10px;
+}
+
+.ajax-response {
+  position: absolute;
+  font-size: 12px;
+  color: red;
+  bottom: 140px;
+}
+
+.sub-response {
+  position: absolute;
+  font-size: 12px;
+  color: red;
+  bottom: 120px;
 }
 
 .subscription__form {
@@ -904,6 +920,7 @@ nav {
 
 .subscribe__form,
 .logpage__form {
+    position: relative;
   width: min(90%, 25rem);
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 5px;
@@ -930,6 +947,7 @@ nav {
 .login__form,
 .newsletter__form {
   display: flex;
+  gap:10px;
   flex-direction: column;
 }
 
@@ -956,7 +974,6 @@ nav {
 .login__form input,
 .newsletter__form input {
   padding: 10px;
-  margin: 8px 0 1rem 0;
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 5px;
 }

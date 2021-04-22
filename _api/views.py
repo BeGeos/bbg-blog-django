@@ -1,15 +1,15 @@
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from .serializer import PostSerializer, NewsSerializer
 
 from newsletter.models import Newsletter
-from post.models import Post, PostImage, PostTag
-from news.models import News, NewsImage, NewsTag
+from post.models import Post, PostTag
+from news.models import News, NewsTag
 
 import json
 
@@ -48,8 +48,13 @@ def subscribe(request):
                   f"If you have any questions, or preferences or comments don't hesitate to " \
                   f"hit the contact me page.\n\n@BBG"
 
-        send_mail(subject=subject, message=message, from_email=EMAIL_ADDRESS,
-                  recipient_list=[new_sub.email], fail_silently=True)
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=message,
+            from_email=EMAIL_ADDRESS,
+            to=[new_sub.email]
+        )
+        email.send(fail_silently=True)
 
         return JsonResponse({"message": "New Subscription added!"}, status=200)
     return JsonResponse({"message": "This address already exists"}, status=400)
@@ -105,22 +110,30 @@ def add_news_views(request, slug):
 # Send Email API
 @require_http_methods(["POST"])
 def send_notification_email(request):
-    data = body_parser(request.body)
-    subscribers = Newsletter.objects.filter(active=True)
-    recipients = []  # Array of email addresses
-    for each in subscribers:
-        recipients.append(each.email)
-
-    context = {
-        "article": data
-    }
-
-    subject = "[BBG] - New article out!"
-    html_message = render_to_string("_api/notification-email.html", context)
-    plain_message = strip_tags(html_message)
-
-    send_mail(subject=subject, message=plain_message, from_email=EMAIL_ADDRESS,
-              recipient_list=recipients, html_message=html_message)
+    # data = body_parser(request.body)
+    # subscribers = Newsletter.objects.filter(active=True)
+    # recipients = []  # Array of email addresses
+    # for each in subscribers:
+    #     recipients.append(each.email)
+    #
+    # context = {
+    #     "article": data
+    # }
+    #
+    # subject = "[BBG] - New article out!"
+    # html_message = render_to_string("_api/notification-email.html", context)
+    # plain_message = strip_tags(html_message)
+    #
+    # email = EmailMultiAlternatives(
+    #     subject=subject,
+    #     body=plain_message,
+    #     from_email=EMAIL_ADDRESS,
+    #     to=[EMAIL_ADDRESS],
+    #     bcc=recipients
+    # )
+    #
+    # email.attach_alternative(html_message, "text/html")
+    # email.send(fail_silently=True)
 
     return JsonResponse({"message": "Accepted"}, status=200)
 

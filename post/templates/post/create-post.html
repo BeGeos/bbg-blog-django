@@ -87,30 +87,25 @@
         <!-- Create Post form -->
         <div class="author">
         <h2 style="text-align: center">Create a new post...</h2>
-        <form method="POST">
+        <form method="POST" enctype='multipart/form-data'>
           {% csrf_token %}
-          <label for="title"> Title: </label>
-          <input type="text" id="title" name="title" placeholder="Enter title here..." />
-          <label for="summary">Summary: </label>
-          <input type="text" id="summary" name="summary" placeholder="Enter summary here..." />
-          <label for="text-post">Post:</label>
-          <textarea id="text-post" cols="8" rows="18" name="text-post"></textarea>
+          <label for="title"> Title:* </label>
+          <input type="text" id="title" name="title" placeholder="Enter title here..." required/>
+          <label for="summary">Summary:* </label>
+          <input type="text" id="summary" name="summary" placeholder="Enter summary here..." required/>
+<!--          <label for="text-post">Post:*</label>-->
+<!--          <textarea id="text-post" cols="8" rows="18" name="text-post" required></textarea>-->
+          {{ form.media }}
+          {{ form.as_p }}
           <div class="form__images">
-            <label for="thumbnail">Cover Pic: </label>
+            <label for="thumbnail">Cover Pic:* </label>
             <input
               type="file"
               id="thumbnail"
               name="thumbnail"
               style="border: none"
             />
-            <hr />
-            <input
-              type="file"
-              id="files"
-              name="post-pics"
-              multiple
-              style="border: none"
-            />
+
           </div>
           <div class="form__tags">
             <label for="tags">Tags: </label>

@@ -94,7 +94,7 @@
       {% endfor %} {% endif %}
       <div class="post-page">
         <div class="central-post">
-          <div class="post-image"></div>
+          <div class="post-image" style="background-image: url('{{ post.image.url }}')"></div>
           <div class="post-page__text">
             <h1>{{ post.title }}</h1>
             <div class="post-details">
@@ -102,7 +102,7 @@
               <small><strong>Author: </strong> {{ post.author }}</small>
             </div>
 
-            <p>{{ post.post }}</p>
+            {{ post.post|safe }}
           </div>
           <div class="social-element" style="margin-bottom: 1rem">
             {% csrf_token %}

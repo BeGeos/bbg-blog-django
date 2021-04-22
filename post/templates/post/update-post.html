@@ -87,7 +87,7 @@
         <!-- Create Post form -->
         <div class="author">
         <h2 style="text-align: center">Update Post...</h2>
-        <form method="POST">
+        <form method="POST" enctype='multipart/form-data'>
           {% csrf_token %}
           <label for="title"> Title: </label>
           <input
@@ -103,14 +103,8 @@
             name="summary"
             value="{{ post.summary }}"
           />
-          <label for="text-post">Post:</label>
-          <textarea
-            id="text-post"
-            name="text-post"
-            cols="8"
-            rows="18"
-
-          >{{ post.post }}</textarea>
+          <label for="post">Post:*</label>
+         <textarea id="post" cols="8" rows="18" name="post" required>{{ post.post|safe }}</textarea>
           <div class="form__images">
             <label for="thumbnail">Cover Pic: </label>
             <input
@@ -119,21 +113,16 @@
               name="thumbnail"
               style="border: none"
             />
-            <hr />
-            <input
-              type="file"
-              id="files"
-              name="post-pics"
-              multiple
-              style="border: none"
-            />
+
           </div>
           <div class="form__tags">
             <label for="tags">Tags: </label>
             <input id="tags"
               type="text"
               name="tags"
+                   value="{{ tags }}"
               placeholder="e.g.: tag1, tag2, tag3..."
+
             />
           </div>
 

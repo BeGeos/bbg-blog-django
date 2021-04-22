@@ -44,19 +44,19 @@ const cancelYesOption = (slug) => {
 // Check if email field is valid function return true or false
 const emailCheck = (email) => {
   // not empty nor invalid address
-  return /\S+@\S+.\S+/gi.test(email);
+  return /\S+@\S+\.\S+/i.test(email);
 };
 
-// Subscibe API call from main page and single page
+// Subscribe API call from main page and single page
 const subscribe = async () => {
   let newsletterForm = document.querySelector(".newsletter__form");
   let address = document.querySelector(".newsletter__form input");
   let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
-  let output = document.querySelector(".ajax-response");
+  let output = document.querySelector(".sub-response");
   let url = baseUrl + "newsletter/subscribe";
 
   if (!emailCheck(address.value)) {
-    output.innerHTML = "<small>Address is not valid</small>";
+    output.textContent = "*Address is not valid";
     return;
   }
 
@@ -76,10 +76,12 @@ const subscribe = async () => {
 
   if (request.status == 200) {
     newsletterForm.innerHTML =
-      "<h3>Thank you for your subscription</h3> <p>I am happy to have you on board!</p>";
+      "<h3 style='text-align: center'>Thank you for your subscription</h3>" +
+      "<p style='text-align: center'>I am happy to have you on board!</p>" +
+      `<div style="text-align: center"><img src='${staticUrl}images/check-green.svg' alt="check-mark" height="55px"></div>`;
     // window.location.href("http://localhost:8000")
   } else {
-    output.innerHTML = `<small>${response.message}</small>`;
+    output.textContent = `*${response.message}`;
   }
 };
 
@@ -92,7 +94,7 @@ const singleSubscribe = async () => {
 
   // console.log(emailCheck(address.value));
   if (!emailCheck(address.value)) {
-    output.innerHTML = "<small>Address is not valid</small>";
+    output.textContent = "*Address is not valid";
     return;
   }
 
@@ -115,11 +117,12 @@ const singleSubscribe = async () => {
   if (request.status == 200) {
     newsletterForm.innerHTML =
       "<h3>Newsletter</h3>" +
-      "<h4 style='text-align: center; margin-top: 3rem'>Thank you for your subscription</h4>" +
-      "<p style='text-align: center; margin-top: 2rem'>I am happy to have you on board!</p>";
+      "<h4 style='text-align: center; margin: 1rem 0'>Thank you for your subscription</h4>" +
+      "<p style='text-align: center; margin-bottom: 1rem'>I am happy to have you on board!</p>" +
+      `<div style="text-align: center"><img src='${staticUrl}images/check-green.svg' alt="check-mark" height="55px"></div>`;
     // window.location.href("http://localhost:8000")
   } else {
-    output.innerHTML = `<small>${response.message}</small>`;
+    output.textContent = `*${response.message}`;
   }
 };
 
