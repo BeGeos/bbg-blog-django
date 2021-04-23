@@ -185,16 +185,51 @@ def get_all_news(request):
     return JsonResponse({"data": serializer.data}, status=200)
 
 
+def get_posts_query(request):
+    order = request.session.get("order-post", default="created_on")
+    if order == "date":
+        order = "created_on"
+
+    query = request.GET.get("q")
+    tag = request.GET.get("tag")
+    entries = ""
+    if query:
+        entries = Post.objects.filter(title__icontains=query).order_by(f"-{order}")
+    elif tag:
+        inner_qs = PostTag.objects.filter(tag__iexact=tag).values("post_id")
+        entries = Post.objects.filter(id__in=inner_qs).order_by(f"-{order}")
+
+    serializer = PostSerializer(instance=entries, many=True)
+    return JsonResponse({"data": serializer.data})
+
+
+def get_news_query(request):
+    order = request.session.get("order-post", default="created_on")
+    if order == "date":
+        order = "created_on"
+
+    query = request.GET.get("q")
+    tag = request.GET.get("tag")
+    entries = ""
+    if query:
+        entries = News.objects.filter(title__icontains=query).order_by(f"-{order}")
+    elif tag:
+        inner_qs = NewsTag.objects.filter(tag__iexact=tag).values("post_id")
+        entries = News.objects.filter(id__in=inner_qs).order_by(f"-{order}")
+
+    serializer = NewsSerializer(instance=entries, many=True)
+    return JsonResponse({"data": serializer.data})
+
+
 # Debugging
 @api_view(("GET",))
 @renderer_classes([JSONRenderer])
 def test_api(request):
+    order = request.session.get("order-post", default="created_on")
+    tag = request.GET.get("tag")
+    inner_qs = PostTag.objects.filter(tag__iexact=tag).values("post_id")
+    entries = Post.objects.filter(id__in=inner_qs)
+    serializer = PostSerializer(instance=entries, many=True)
 
-    records = Post.objects.all()
-    records = records.order_by("-views")
-    serializer = PostSerializer(instance=records, many=True)
-    headers = {
-        "Items-Order": "views"
-    }
-    return Response(serializer.data, status=200, headers=headers)
+    return Response(serializer.data, status=200)
     # return JsonResponse({"message": serializer.data})

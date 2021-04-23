@@ -26,8 +26,12 @@ def parse_tags(tags):
 
 def all_posts(request):
     order = request.session.get("order-post", default="created_on")
+    # print(request.session.items())
+    if not order:
+        order = "created_on"
     if order == "date":
         order = "created_on"
+
     posts = Post.objects.order_by(f'-{order}', "-created_on").all()
     context = {
         "posts": posts,

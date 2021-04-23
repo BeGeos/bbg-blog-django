@@ -23,10 +23,10 @@ const switchOff = () => {
 };
 
 const showCancelOptions = (slug) => {
-let background = document.querySelector(".cancel__action");
-background.addEventListener("click", () => {
+  let background = document.querySelector(".cancel__action");
+  background.addEventListener("click", () => {
     background.style.display = "none";
-})
+  });
   let options = document.querySelector(".cancel__action");
   let link = document.querySelector(".yes-button");
   options.style.display = "flex";
@@ -149,7 +149,7 @@ const addPostLike = async (slug) => {
   const response = await request.json();
   if (request.status == 200) {
     likeNum.textContent = "Likes: " + response.likes;
-    likeBtn.setAttribute("disabled", "disabled")
+    likeBtn.setAttribute("disabled", "disabled");
   } else {
     console.log(response.message);
   }
@@ -172,9 +172,9 @@ const addNewsLike = async (slug) => {
 
   const response = await request.json();
   if (request.status == 200) {
-  console.log(response.likes)
+    console.log(response.likes);
     likeNum.textContent = "Likes: " + response.likes;
-    likeBtn.setAttribute("disabled", "disabled")
+    likeBtn.setAttribute("disabled", "disabled");
   } else {
     console.log(response.message);
   }
@@ -245,8 +245,7 @@ const getAllPosts = async (order, isSuper) => {
     }
 
     let postCard = `<div class="single-post wide">
-    <div class="post__img">
-      <img src="${post.image}" />
+    <div class="post__img" style="background-image: url(${post.image})">
     </div>
     <div class="post__text">
       <h3>
@@ -310,8 +309,8 @@ const getAllNews = async (order, isSuper) => {
     }
 
     let newsCard = `<div class="single-post wide">
-    <div class="post__img">
-      <img src="${news.image}" />
+    <div class="post__img" style="background-image: url(${news.image})">
+      
     </div>
     <div class="post__text">
       <h3>
@@ -345,3 +344,157 @@ const getAllNews = async (order, isSuper) => {
   postDiv.innerHTML = allCards;
   // console.log("done!");
 };
+
+// Search API for blog posts
+const searchAPI = async (isSuper) => {
+  let searchInput = document.querySelector(".search__input");
+  let query = searchInput.value;
+  if (query === "") {
+    return;
+  }
+
+  let postDiv = document.querySelector(".all-posts");
+
+  let queryURL = baseUrl + "posts/query?q=" + query;
+  let data = await fetch(queryURL, { method: "GET" });
+  let response = await data.json();
+
+  // If no result comes back
+  if (response.data.length == 0) {
+    postDiv.innerHTML = "";
+    let noMatchMessage = document.createElement("div");
+    let innerMessage = document.createElement("h2");
+    innerMessage.style.textAlign = "center";
+    let message = document.createTextNode("No Match Found....sorry");
+    innerMessage.appendChild(message);
+    noMatchMessage.appendChild(innerMessage);
+    postDiv.appendChild(noMatchMessage);
+
+    return;
+  }
+
+  let allCards = "";
+
+  for (let post of response.data) {
+    // let post = response.data[i];
+    let postTags = "";
+
+    // Create the Tags li
+    for (let tag of post.tags) {
+      postTags += `<li>${tag}</li>`;
+    }
+
+    let updateActions = "";
+
+    // Create the user Update and Delete functions
+    if (isSuper == "True") {
+      updateActions += `<div class="post__actions">
+      <a href="${sourceUrl}blog/update-post/${post.slug}">Update</a>
+      <a onclick="showCancelOptions('${post.slug}')">Delete</a>
+    </div>`;
+    }
+
+    let postCard = `<div class="single-post wide">
+    <div class="post__img" style="background-image: url(${post.image})">
+      
+    </div>
+    <div class="post__text">
+      <h3>
+        <a href="${sourceUrl}blog/post/${post.slug}">${post.title}</a>
+      </h3>
+      <p>${post.summary}</p>
+      <div id="single-tag">
+        <ul>
+          ${postTags}
+        </ul>
+      </div>
+      ${updateActions}
+    </div>
+    <div class="post__stats">
+      <small
+        >${post["created_on"]} <br />
+        by ${post.author}</small
+      >
+      <div class="post__likes">
+        <img src="${staticUrl}images/heart-fill.svg" />
+        <p>${post.likes}</p>
+        <img src="${staticUrl}images/eye.svg" alt="views" />
+        <p>${post.views}</p>
+      </div>
+    </div>
+  </div>`;
+
+    allCards += postCard;
+  }
+
+  postDiv.innerHTML = allCards;
+  // console.log("done!");
+};
+
+// Search API by Tag
+const searchAPIbyTag = async (tag, isSuper) => {
+  let postDiv = document.querySelector(".all-posts");
+
+  let queryURL = baseUrl + "posts/query?tag=" + tag;
+  let data = await fetch(queryURL, { method: "GET" });
+  let response = await data.json();
+
+  let allCards = "";
+
+  for (let post of response.data) {
+    // let post = response.data[i];
+    let postTags = "";
+
+    // Create the Tags li
+    for (let tag of post.tags) {
+      postTags += `<li>${tag}</li>`;
+    }
+
+    let updateActions = "";
+
+    // Create the user Update and Delete functions
+    if (isSuper == "True") {
+      updateActions += `<div class="post__actions">
+      <a href="${sourceUrl}blog/update-post/${post.slug}">Update</a>
+      <a onclick="showCancelOptions('${post.slug}')">Delete</a>
+    </div>`;
+    }
+
+    let postCard = `<div class="single-post wide">
+    <div class="post__img" style="background-image: url(${post.image})">
+      
+    </div>
+    <div class="post__text">
+      <h3>
+        <a href="${sourceUrl}blog/post/${post.slug}">${post.title}</a>
+      </h3>
+      <p>${post.summary}</p>
+      <div id="single-tag">
+        <ul>
+          ${postTags}
+        </ul>
+      </div>
+      ${updateActions}
+    </div>
+    <div class="post__stats">
+      <small
+        >${post["created_on"]} <br />
+        by ${post.author}</small
+      >
+      <div class="post__likes">
+        <img src="${staticUrl}images/heart-fill.svg" />
+        <p>${post.likes}</p>
+        <img src="${staticUrl}images/eye.svg" alt="views" />
+        <p>${post.views}</p>
+      </div>
+    </div>
+  </div>`;
+
+    allCards += postCard;
+  }
+
+  postDiv.innerHTML = allCards;
+  // console.log("done!");
+};
+
+// Search API for blog news

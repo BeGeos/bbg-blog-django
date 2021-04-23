@@ -12,5 +12,7 @@ urlpatterns = [
     path('send-notification/', views.send_notification_email, name="notification-email"),
     path('posts/all', views.get_all_posts, name="get-all-posts"),
     path('news/all', views.get_all_news, name="get-all-news"),
+    path('posts/query', views.get_posts_query, name="get-posts-query"),
+    path('news/query', views.get_news_query, name="get-news-query"),
     path('test/', views.test_api, name="test-api")
 ]
